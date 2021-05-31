@@ -7,22 +7,85 @@ using UnityEngine;
 public class PanjaManager : MonoBehaviour
 {
     [SerializeField]
-    private float CreateTime = 0.5f;
+    private Sprite Panja = null;
+
+    [SerializeField]
+    private float CreateRange = 20f;
+
+    [SerializeField]
+    private float CreateRandomRangeYStart = -2f;
+
+    [SerializeField]
+    private float CreateRandomRangeYEnd = 2f;
+
+    [SerializeField]
+    private float CreateRandomScaleXStart = 5f;
+
+    [SerializeField]
+    private float CreateRandomInterXEnd = 2f;
+
+    [SerializeField]
+    private float CreateRandomInterXStart = 4f;
+
+    [SerializeField]
+    private float CreateRandomScaleXEnd = 10f;
+
+    //마지막으로 만들어진 판자의 x크기
+    [SerializeField]
+    private float LastCreateScaleX = 0f;
+
+    //마지막으로 만들어진 판자의 x위치
+    [SerializeField]
+    private float LastCreatePosX = 0f;
+
+    private bool NewPanjaLogic()
+    {
+        if (LastCreatePosX >= PlayerScript.PlayerPos.x + CreateRange)
+        {
+            return false;
+        }
+        GameObject NewPanja = new GameObject("Panja");
+        NewPanja.transform.localScale = new Vector3(Random.Range(CreateRandomScaleXStart, CreateRandomScaleXEnd), 1f, 0);
+
+        Vector3 CreatePos = new Vector3();
+
+        CreatePos.x = LastCreatePosX + LastCreateScaleX + (NewPanja.transform.localScale.x * 0.5f);
+        CreatePos.x += Random.Range(CreateRandomInterXStart, CreateRandomInterXEnd);
+        CreatePos.z = 0f;
+        CreatePos.y = Random.Range(CreateRandomRangeYStart, CreateRandomRangeYEnd);
+
+        NewPanja.transform.position = CreatePos;
+
+        //이미지 세팅
+        SpriteRenderer NewSP = NewPanja.AddComponent<SpriteRenderer>();
+        NewSP.sprite = Panja;
+
+        //갱신
+        LastCreatePosX = CreatePos.x;
+        LastCreateScaleX = (NewPanja.transform.localScale.x * 0.5f);
+
+        NewPanja.AddComponent<BoxCollider>();
+
+        return true;
+    }
+
+    private void ChechPanjaCreate()
+    {
+        while (NewPanjaLogic()) ;
+    }
+
+    private void Start()
+    {
+        ChechPanjaCreate();
+    }
+
+    private void Awake()
+    {
+        Debug.Log("panjamanager awake");
+    }
 
     private void Update()
     {
-        CreateTime -= Time.deltaTime;
-
-        if (CreateTime <= 0.0f)
-        {
-            GameObject NewPanja = new GameObject("Panja");
-
-            Vector3 CreatePos = this.transform.position;
-            CreatePos.z = 0f;
-            NewPanja.transform.position = CreatePos;
-            NewPanja.AddComponent<SpriteRenderer>();
-
-            CreateTime = 0.5f;
-        }
+        ChechPanjaCreate();
     }
 }
