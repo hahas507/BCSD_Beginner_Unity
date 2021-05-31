@@ -44,6 +44,8 @@ public class PlayerScript : MonoBehaviour
 
         if (true == Input.GetKeyDown(KeyCode.Space) && 0 < m_JumpCount)
         {
+            Vector3 CurrentSpeed = new Vector3(0, 0, 0);
+            m_Rigi.velocity = CurrentSpeed;
             m_Rigi.AddForce(Vector3.up * LogicValue.JumpPower);
             //m_isJump = true;
 
