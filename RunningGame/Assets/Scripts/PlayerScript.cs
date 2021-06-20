@@ -39,13 +39,24 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y <= -MoveCamera.CamCom.orthographicSize)
+        {
+            //플레이어 맨 처음으로 돌리기
+            transform.position = Vector3.zero;
+            //카메라 맨처음으로 돌리기
+            MoveCamera.CameraReset();
+            //판자 지우기
+            PanjaManager.PanjaReset();
+        }
+
         transform.position += Vector3.right * Time.deltaTime * LogicValue.MoveSpeed;
         m_PlayerPos = transform.position;
 
         if (true == Input.GetKeyDown(KeyCode.Space) && 0 < m_JumpCount)
         {
-            Vector3 CurrentSpeed = new Vector3(0, 0, 0);
-            m_Rigi.velocity = CurrentSpeed;
+            //Vector3 CurrentSpeed = new Vector3(0, 0, 0);
+            m_Rigi.velocity = new Vector3(0, 0, 0);
+
             m_Rigi.AddForce(Vector3.up * LogicValue.JumpPower);
             //m_isJump = true;
 

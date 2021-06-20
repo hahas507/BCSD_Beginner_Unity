@@ -10,5 +10,9 @@ public class PanjaScript : MonoBehaviour
 
     private void Update()
     {
+        if (PlayerScript.PlayerPos.x - transform.position.x >= 10f)
+        {
+            Destroy(gameObject);
+        }
     }
 }

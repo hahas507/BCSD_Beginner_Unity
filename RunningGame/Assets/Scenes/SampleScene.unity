@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CameraAndPlayerData:
-    m_MoveSpeed: 5
+    m_MoveSpeed: 7.79
     m_JumpPower: 500
     m_JumpCount: 3
 --- !u!4 &1309872579
@@ -392,9 +392,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1904488633}
   - component: {fileID: 1904488632}
-  - component: {fileID: 1904488630}
   - component: {fileID: 1904488631}
   - component: {fileID: 1904488634}
+  - component: {fileID: 1904488630}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged

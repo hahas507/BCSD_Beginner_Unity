@@ -38,6 +38,35 @@ public class PanjaManager : MonoBehaviour
     [SerializeField]
     private float LastCreatePosX = 0f;
 
+    private float ResetLastCreateScaleX = 0f;
+
+    private float ResetLastCreatePosX = 0f;
+
+    public static PanjaManager MainPanjaManager;
+
+    public static void PanjaReset()
+    {
+        MainPanjaManager.ResetData();
+    }
+
+    private void Awake()
+    {
+        ResetLastCreateScaleX = LastCreateScaleX;
+        ResetLastCreatePosX = LastCreatePosX;
+
+        MainPanjaManager = this;
+
+        Debug.Log("panjamanager awake");
+        ChechPanjaCreate();
+    }
+
+    public void ResetData()
+    {
+        LastCreateScaleX = ResetLastCreateScaleX;
+        LastCreatePosX = ResetLastCreatePosX;
+        ChechPanjaCreate();
+    }
+
     private bool NewPanjaLogic()
     {
         if (LastCreatePosX >= PlayerScript.PlayerPos.x + CreateRange)
@@ -65,6 +94,7 @@ public class PanjaManager : MonoBehaviour
         LastCreateScaleX = (NewPanja.transform.localScale.x * 0.5f);
 
         NewPanja.AddComponent<BoxCollider>();
+        NewPanja.AddComponent<PanjaScript>();
 
         return true;
     }
@@ -77,11 +107,6 @@ public class PanjaManager : MonoBehaviour
     private void Start()
     {
         ChechPanjaCreate();
-    }
-
-    private void Awake()
-    {
-        Debug.Log("panjamanager awake");
     }
 
     private void Update()
