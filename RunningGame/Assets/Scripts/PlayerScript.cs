@@ -26,11 +26,13 @@ public class PlayerScript : MonoBehaviour
 
     private int m_JumpCount = 3;
     private Rigidbody m_Rigi = null;
+    private Animator m_Ani = null;
 
     private void Awake()
     {
         {
             m_Rigi = GetComponent<Rigidbody>();
+            m_Ani = GetComponent<Animator>();
             m_JumpCount = LogicValue.JumpCount;
             if (null == m_Rigi)
             {
@@ -60,6 +62,7 @@ public class PlayerScript : MonoBehaviour
 
         if (true == Input.GetKeyDown(KeyCode.Space) && 0 < m_JumpCount)
         {
+            m_Ani.SetTrigger("Jump");
             //Vector3 CurrentSpeed = new Vector3(0, 0, 0);
             m_Rigi.velocity = new Vector3(0, 0, 0);
 
@@ -103,7 +106,7 @@ public class PlayerScript : MonoBehaviour
         //리지드 바디와 콜라이더를 가진 어떤 오브젝트가
 
         //m_isJump = false;
-
+        m_Ani.SetTrigger("Run");
         m_JumpCount = LogicValue.JumpCount;
     }
 }
