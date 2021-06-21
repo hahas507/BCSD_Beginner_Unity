@@ -88,6 +88,7 @@ public class PanjaManager : MonoBehaviour
         //이미지 세팅
         SpriteRenderer NewSP = NewPanja.AddComponent<SpriteRenderer>();
         NewSP.sprite = Panja;
+        NewSP.color = new Color(1f, 0f, 0f, 1f);
 
         //갱신
         LastCreatePosX = CreatePos.x;

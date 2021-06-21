@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    private void Start()
+    private static bool m_isDead;
+
+    public static bool IsDead
     {
+        get
+        {
+            return m_isDead;
+        }
     }
 
     private static Vector3 m_PlayerPos;
@@ -45,8 +51,8 @@ public class PlayerScript : MonoBehaviour
             transform.position = Vector3.zero;
             //카메라 맨처음으로 돌리기
             MoveCamera.CameraReset();
-            //판자 지우기
-            PanjaManager.PanjaReset();
+
+            m_isDead = true;
         }
 
         transform.position += Vector3.right * Time.deltaTime * LogicValue.MoveSpeed;
@@ -62,6 +68,21 @@ public class PlayerScript : MonoBehaviour
 
             --m_JumpCount;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (true == m_isDead)
+        {
+            //판자 지우기
+            PanjaManager.PanjaReset();
+            m_isDead = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("coin collision");
     }
 
     private void OnCollisionStay(Collision collision)

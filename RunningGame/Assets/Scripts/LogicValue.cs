@@ -49,6 +49,12 @@ public class LogicValue : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private GameObject m_CoinPrefab;
+
+    public static GameObject CoinPrefab
+    { get { return Inst.m_CoinPrefab; } }
+
     //기존 입력해준 값에 의해서 결정되는 상수와 같은 값도 여기서 계산해줄 수 있다.
     private void Awake()
     {
