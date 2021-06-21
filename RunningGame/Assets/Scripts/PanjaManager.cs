@@ -12,23 +12,31 @@ public class PanjaManager : MonoBehaviour
     [SerializeField]
     private float CreateRange = 20f;
 
+    #region Platform size
+
+    [SerializeField]
+    private int CreateRandomScaleXStart = 2;
+
+    [SerializeField]
+    private int CreateRandomScaleXEnd = 6;
+
+    #endregion Platform size
+
+    #region Platform Spawn
+
+    [SerializeField]
+    private float CreateRandomInterXStart = 4f;
+
+    [SerializeField]
+    private int CreateRandomInterXEnd = 2;
+
     [SerializeField]
     private float CreateRandomRangeYStart = -2f;
 
     [SerializeField]
     private float CreateRandomRangeYEnd = 2f;
 
-    [SerializeField]
-    private float CreateRandomScaleXStart = 5f;
-
-    [SerializeField]
-    private float CreateRandomInterXEnd = 2f;
-
-    [SerializeField]
-    private float CreateRandomInterXStart = 4f;
-
-    [SerializeField]
-    private float CreateRandomScaleXEnd = 10f;
+    #endregion Platform Spawn
 
     //마지막으로 만들어진 판자의 x크기
     [SerializeField]
@@ -73,12 +81,15 @@ public class PanjaManager : MonoBehaviour
         {
             return false;
         }
+
+        int NewFloorCount = Random.Range(CreateRandomScaleXStart, CreateRandomScaleXEnd);
+
         GameObject NewPanja = new GameObject("Panja");
-        NewPanja.transform.localScale = new Vector3(Random.Range(CreateRandomScaleXStart, CreateRandomScaleXEnd), 1f, 0);
+        //NewPanja.transform.localScale = new Vector3(Random.Range(CreateRandomScaleXStart, CreateRandomScaleXEnd), 1f, 0);
 
         Vector3 CreatePos = new Vector3();
 
-        CreatePos.x = LastCreatePosX + LastCreateScaleX + (NewPanja.transform.localScale.x * 0.5f);
+        CreatePos.x = LastCreatePosX + LastCreateScaleX + (NewFloorCount * 0.5f);
         CreatePos.x += Random.Range(CreateRandomInterXStart, CreateRandomInterXEnd);
         CreatePos.z = 0f;
         CreatePos.y = Random.Range(CreateRandomRangeYStart, CreateRandomRangeYEnd);
@@ -86,16 +97,20 @@ public class PanjaManager : MonoBehaviour
         NewPanja.transform.position = CreatePos;
 
         //이미지 세팅
-        SpriteRenderer NewSP = NewPanja.AddComponent<SpriteRenderer>();
-        NewSP.sprite = Panja;
-        NewSP.color = new Color(1f, 0f, 0f, 1f);
+        //SpriteRenderer NewSP = NewPanja.AddComponent<SpriteRenderer>();
+        //NewSP.sprite = Panja;
+        //NewSP.color = new Color(1f, 0f, 0f, 1f);
+
+        PanjaScript PS = NewPanja.AddComponent<PanjaScript>();
+        PS.FloorCount = NewFloorCount;
+
+        //BoxCollider BC = NewPanja.AddComponent<BoxCollider>();
+        //BC.size = new Vector3(PS.LocalScale + 4, 0.95f, 1);
+        //BC.center = new Vector3(0.15f, 0, 0);
 
         //갱신
         LastCreatePosX = CreatePos.x;
-        LastCreateScaleX = (NewPanja.transform.localScale.x * 0.5f);
-
-        NewPanja.AddComponent<BoxCollider>();
-        NewPanja.AddComponent<PanjaScript>();
+        LastCreateScaleX = (PS.FloorCount * 0.5f);
 
         return true;
     }
