@@ -37,4 +37,12 @@ public class Background : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void LateUpdate()
+    {
+        if (PlayerScript.IsDead)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

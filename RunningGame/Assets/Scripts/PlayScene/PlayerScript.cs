@@ -79,6 +79,8 @@ public class PlayerScript : MonoBehaviour
         {
             //판자 지우기
             PanjaManager.PanjaReset();
+
+            GameObject NewBG = Instantiate<GameObject>(LogicValue.BGPrefab);
             m_isDead = false;
         }
     }
