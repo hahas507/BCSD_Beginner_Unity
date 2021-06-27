@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -30,31 +31,31 @@ public class PlayerScript : MonoBehaviour
 
     private void Awake()
     {
+        m_Rigi = GetComponent<Rigidbody>();
+        m_Ani = GetComponent<Animator>();
+        m_JumpCount = LogicValue.JumpCount;
+        if (null == m_Rigi)
         {
-            m_Rigi = GetComponent<Rigidbody>();
-            m_Ani = GetComponent<Animator>();
-            m_JumpCount = LogicValue.JumpCount;
-            if (null == m_Rigi)
-            {
-                //경고로 띄워준다
-                //Debug.LogWarning("null == m_Rigi");
-                Debug.LogError("null == m_Rigi");
-            }
-            //Debug.LogWarning("warning test");
-            //Debug.LogError("error test");
+            //경고로 띄워준다
+            //Debug.LogWarning("null == m_Rigi");
+            Debug.LogError("null == m_Rigi");
         }
+        //Debug.LogWarning("warning test");
+        //Debug.LogError("error test");
     }
 
     private void Update()
     {
         if (transform.position.y <= -MoveCamera.CamCom.orthographicSize)
         {
-            //플레이어 맨 처음으로 돌리기
-            transform.position = Vector3.zero;
-            //카메라 맨처음으로 돌리기
-            MoveCamera.CameraReset();
+            LogicValue.ScoreReset();
+            SceneManager.LoadScene(2);
+            ////플레이어 맨 처음으로 돌리기
+            //transform.position = Vector3.zero;
+            ////카메라 맨처음으로 돌리기
+            //MoveCamera.CameraReset();
 
-            m_isDead = true;
+            //m_isDead = true;
         }
 
         transform.position += Vector3.right * Time.deltaTime * LogicValue.MoveSpeed;

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class CoinScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     private void Start()
     {
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (PlayerScript.PlayerPos.x - transform.position.x >= 10f)
@@ -28,7 +26,7 @@ public class CoinScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        LogicValue.AddScore(5);
         Destroy(gameObject);
-        //Debug.Log("Player collision");
     }
 }

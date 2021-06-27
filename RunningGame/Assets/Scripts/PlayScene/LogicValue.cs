@@ -75,6 +75,43 @@ public class LogicValue : MonoBehaviour
 
     public static GameObject BGPrefab { get { return Inst.m_BackgroundPrefab; } }
 
+    [SerializeField]
+    private static int m_Score;
+
+    public static int Score { get { return m_Score; } }
+
+    public static void ScoreReset()
+    {
+        m_Score = 0;
+    }
+
+    public static void AddScore(int _Score)
+    {
+        m_Score += _Score;
+    }
+
+    [SerializeField]
+    private static List<ScoreData> m_ScoreArr;
+
+    public static List<ScoreData> ScoreArr { get { return m_ScoreArr; } }
+
+    public class ScoreData
+    {
+        public string Name;
+        public int Score;
+    }
+
+    public static void ScoreLoad()
+    {
+        if (5 > m_ScoreArr.Count)
+        {
+        }
+    }
+
+    public static void ScoreCheck()
+    {
+    }
+
     //기존 입력해준 값에 의해서 결정되는 상수와 같은 값도 여기서 계산해줄 수 있다.
     private void Awake()
     {
